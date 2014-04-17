@@ -1,29 +1,29 @@
 package lingojourney;
 
-import static java.lang.Thread.sleep;
+import org.apache.log4j.Logger;
 
 public class SushiChef implements Runnable {
 
-    private final BlockingQueue<Sushi> belt;
-    private String chefName;
-    private int numberOfsushisToMake;
+    private final String chefName;
+    private final int numberOfSushisToMake;
+    private final IMiniBlockingQueue<Sushi> sushiBelt;
+    private static Logger log = Logger.getLogger(SushiChef.class);
 
-    public SushiChef(BlockingQueue<Sushi> belt, String chefName, int numberOfsushisToMake) {
-        this.belt = belt;
+    public SushiChef(String chefName, int numberOfSushisToMake, IMiniBlockingQueue<Sushi> sushiBelt) {
         this.chefName = chefName;
-        this.numberOfsushisToMake = numberOfsushisToMake;
+        this.numberOfSushisToMake = numberOfSushisToMake;
+        this.sushiBelt = sushiBelt;
     }
 
+    @Override
     public void run() {
-        for (int i = 0; i < numberOfsushisToMake; i++) {
-            System.out.println("Chef " + chefName + " about to put in a new sushi.");
-            belt.enqueue(new Sushi(i));
-            System.out.println("Chef " + chefName + " puts: " + i);
+        for (int i = 0; i < numberOfSushisToMake; i++) {
             try {
-                sleep((int) (Math.random() * 100));
+                log.info("Chef #" + chefName + " ready to put in a new sushi");
+                sushiBelt.put(new Sushi("" + i));
+                log.info("Chef #" + chefName + " has put in sushi " + i);
             } catch (InterruptedException ignored) {
             }
         }
     }
-
 }

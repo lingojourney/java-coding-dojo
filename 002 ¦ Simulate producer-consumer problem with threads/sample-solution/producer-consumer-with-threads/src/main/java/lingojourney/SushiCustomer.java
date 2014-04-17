@@ -1,22 +1,29 @@
 package lingojourney;
 
+import org.apache.log4j.Logger;
+
 public class SushiCustomer implements Runnable {
-
-    private final BlockingQueue<Sushi> belt;
+    private final String customerName;
     private final int numberOfSushisToEat;
-    private String customerName;
+    private final IMiniBlockingQueue<Sushi> sushiBelt;
+    private static Logger log = Logger.getLogger(SushiChef.class);
 
-    public SushiCustomer(BlockingQueue<Sushi> belt, String customerName, int numberOfSushisToEat) {
-        this.belt = belt;
+    public SushiCustomer(String customerName, int numberOfSushisToEat, IMiniBlockingQueue<Sushi> sushiBelt) {
         this.customerName = customerName;
         this.numberOfSushisToEat = numberOfSushisToEat;
+        this.sushiBelt = sushiBelt;
     }
 
+    @Override
     public void run() {
         for (int i = 0; i < numberOfSushisToEat; i++) {
-            System.out.println("Customer #" + customerName + " about to fetch for a new sushi.");
-            Sushi sushi = belt.dequeue();
-            System.out.println("Customer #" + customerName + " got: " + sushi);
+            try {
+                log.info("Customer #" + customerName + " ready to eat a new sushi");
+                Sushi sushi = sushiBelt.take();
+                log.info("Customer #" + customerName + " has eaten sushi " + sushi);
+            } catch (InterruptedException ignored) {
+            }
         }
     }
+
 }

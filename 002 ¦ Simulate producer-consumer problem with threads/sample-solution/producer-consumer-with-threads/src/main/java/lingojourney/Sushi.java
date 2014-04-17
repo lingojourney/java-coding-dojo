@@ -1,17 +1,16 @@
 package lingojourney;
 
 public class Sushi {
-
-    int sushiId;
-
-    public Sushi(int sushiId) {
-        this.sushiId = sushiId;
-    }
+    private String sushiId;
 
     @Override
     public String toString() {
         return "Sushi{" +
-                "sushiId=" + sushiId +
+                "sushiId='" + sushiId + '\'' +
                 '}';
+    }
+
+    public Sushi(String sushiId) {
+        this.sushiId = sushiId;
     }
 }
