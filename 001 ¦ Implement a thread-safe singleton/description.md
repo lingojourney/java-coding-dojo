@@ -1,4 +1,4 @@
-* Create a singleton class called MeaningOfLife.
+* Create a singleton class called MeaningOfLife using the static inner class method.
 * getMeaning() always return 42
  
 Write the following test
