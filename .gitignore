@@ -1,3 +1,4 @@
 /002 ¦ Simulate producer-consumer problem with threads/sample-solution/producer-consumer-with-threads/target
 /001 ¦ Implement a thread-safe singleton/sample-solution/thread-safe-singleton/target
 start
+*.iws
